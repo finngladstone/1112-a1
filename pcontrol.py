@@ -15,9 +15,14 @@
 #
 # stat: #115
 
+import os
 import sys
 
 def main():
+
+	# create output file
+
+	foutput = open("output.txt", "x")
 
 	# list for files that need to be manipulated
 	File_ls = []
@@ -32,17 +37,24 @@ def main():
 	except FileNotFoundError:
 		print("Filelist.txt not found")
 
-	for file_address in File_ls:
+	for path in File_ls:
+		# remove newline char from path
+		path = path.strip("\n")
 
 		try:
+			status = os.stat(path)
+			# see https://www.geeksforgeeks.org/python-os-stat-method/
 			# make modifications
 			# write in output
 			pass
 
 		except FileNotFoundError:
-			# write to output
+			print("File not found")
 			pass
 
+
+	foutput.close()
+	assert foutput.closed
 
 
 
