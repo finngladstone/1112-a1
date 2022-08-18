@@ -20,9 +20,9 @@ import sys
 
 def main():
 
-	# create output file
+	# create output file - !!!
 
-	foutput = open("output.txt", "x")
+	foutput = open("output.txt", "w")
 
 	# list for files that need to be manipulated
 	File_ls = []
@@ -43,6 +43,14 @@ def main():
 
 		try:
 			status = os.stat(path)
+
+			#st_mode
+
+
+
+			print(status.st_mode)
+
+			# “Size: {}, Owner: {}, Group: {}, last modified date: {}, last access date: {}”
 			# see https://www.geeksforgeeks.org/python-os-stat-method/
 			# make modifications
 			# write in output
