@@ -17,12 +17,21 @@
 
 import os
 import sys
+import stat
 
 def main():
 
-	# create output file - !!!
+	foutput = open("output.txt", "w") # creates or opens with overwrite the output file
 
-	foutput = open("output.txt", "w")
+	# function definitions for perms checks later
+
+	# https://stackoverflow.com/a/1861859
+
+	def groupread(status):
+		return bool(status.st_mode & stat.S_IRGRP)
+
+	def groupexec(status):
+		return bool(status.st_mode & stat.S_IXGRP)
 
 	# list for files that need to be manipulated
 	File_ls = []
@@ -44,12 +53,28 @@ def main():
 		try:
 			status = os.stat(path)
 
-			#st_mode
+			foutput.write(path + " Group Readable: " + str(groupread(status)) + ", Group Executable: " + str(groupexec(status)) + " ")
+			foutput.write("Size: {a}, Owner: {b}, Group: {c}, last modified date: {d}, last access date: {e}\n".format(
+				a = status.st_size,
+				b = status.st_uid,
+				c = status.st_gid,
+				d = status.st_mtime,
+				e = status.st_atime)
+			)
+
+			if groupexec(status):
+				# change to not execute
+				os.chmod(path, stat.S_IWGRP)
+				print("changed to read/write")
+			else:
+				# change to execute
+				os.chmod(path, stat.S_IXGRP)
+				print("changed to exec")
 
 
 
-			print(status.st_mode)
 
+			# Group Readable: {True/False}, Group Executable: {True/False}”
 			# “Size: {}, Owner: {}, Group: {}, last modified date: {}, last access date: {}”
 			# see https://www.geeksforgeeks.org/python-os-stat-method/
 			# make modifications
