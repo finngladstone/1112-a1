@@ -48,21 +48,22 @@ def main():
 
 	except FileNotFoundError:
 		# write error code to output and exit program 
-		foutput.write("filelist.txt can not be found")
+		foutput.write("filelist.txt can not be found\n")
 		foutput.close()
 		sys.exit(0)
 
 	for path in File_ls:
 		# remove newline char from path
 		path_temp = path.strip("\n")
+		path_temp = os.path.abspath(path_temp)
 
 		try:
 			status = os.stat(path_temp)
 			# make format corrections on time variable s
-			moddate = datetime.fromtimestamp(status.st_mtime).strftime("%B %d %Y")
-			accdate = datetime.fromtimestamp(status.st_atime).strftime("%B %d %Y")
+			moddate = datetime.fromtimestamp(status.st_mtime).strftime("%b %d  %Y")
+			accdate = datetime.fromtimestamp(status.st_atime).strftime("%b %d  %Y")
 
-			foutput.write(path_temp + " Group Readable: " + str(groupread(status)) + ", Group Executable: " + str(groupexec(status)) + " ")
+			foutput.write(path.strip("\n") + " Group Readable: " + str(groupread(status)) + ", Group Executable: " + str(groupexec(status)) + " ")
 			foutput.write("Size: {a}, Owner: {b}, Group: {c}, last modified date: {d}, last access date: {e}\n".format(
 				a = status.st_size,
 				b = status.st_uid,
@@ -72,26 +73,14 @@ def main():
 			)
 
 			if groupexec(status):
-				# change to not execute
+				# change to read/write
 				os.chmod(path_temp, stat.S_IRGRP | stat.S_IWGRP)
-				print("changed to read/write")
 			else:
-				# change to execute
+				# change to read/write/execute
 				os.chmod(path_temp, stat.S_IRGRP | stat.S_IWGRP | stat.S_IXGRP)
-				print("changed to exec")
-
-
-
-
-			# Group Readable: {True/False}, Group Executable: {True/False}”
-			# “Size: {}, Owner: {}, Group: {}, last modified date: {}, last access date: {}”
-			# see https://www.geeksforgeeks.org/python-os-stat-method/
-			# make modifications
-			# write in output
-			pass
 
 		except FileNotFoundError:
-			foutput.write("{} can not be found\n".format(path_temp))
+			foutput.write("{} can not be found\n".format(path.strip("\n")))
 			pass
 
 
