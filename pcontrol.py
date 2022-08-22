@@ -22,6 +22,8 @@ import stat
 
 from datetime import datetime
 
+import grp, pwd
+
 def main():
 
 	foutput = open("output.txt", "w") # creates or opens with overwrite the output file
@@ -63,11 +65,14 @@ def main():
 			moddate = datetime.fromtimestamp(status.st_mtime).strftime("%b %d  %Y")
 			accdate = datetime.fromtimestamp(status.st_atime).strftime("%b %d  %Y")
 
+			usr = pwd.getpwuid(status.st_uid)
+			gp = grp.getgrgid(status.st_gid)
+
 			foutput.write(path.strip("\n") + " Group Readable: " + str(groupread(status)) + ", Group Executable: " + str(groupexec(status)) + " ")
 			foutput.write("Size: {a}, Owner: {b}, Group: {c}, last modified date: {d}, last access date: {e}\n".format(
 				a = status.st_size,
-				b = status.st_uid,
-				c = status.st_gid,
+				b = usr[0],
+				c = gp[0],
 				d = moddate,
 				e = accdate)
 			)
