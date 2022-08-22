@@ -48,12 +48,12 @@ def main():
 
 	for path in File_ls:
 		# remove newline char from path
-		path = path.strip("\n")
+		path_temp = path.strip("\n")
 
 		try:
-			status = os.stat(path)
+			status = os.stat(path_temp)
 
-			foutput.write(path + " Group Readable: " + str(groupread(status)) + ", Group Executable: " + str(groupexec(status)) + " ")
+			foutput.write(path_temp + " Group Readable: " + str(groupread(status)) + ", Group Executable: " + str(groupexec(status)) + " ")
 			foutput.write("Size: {a}, Owner: {b}, Group: {c}, last modified date: {d}, last access date: {e}\n".format(
 				a = status.st_size,
 				b = status.st_uid,
@@ -64,11 +64,11 @@ def main():
 
 			if groupexec(status):
 				# change to not execute
-				os.chmod(path, stat.S_IWGRP)
+				os.chmod(path_temp, stat.S_IRGRP | stat.S_IWGRP)
 				print("changed to read/write")
 			else:
 				# change to execute
-				os.chmod(path, stat.S_IXGRP)
+				os.chmod(path_temp, stat.S_IRGRP | stat.S_IWGRP | stat.S_IXGRP)
 				print("changed to exec")
 
 
