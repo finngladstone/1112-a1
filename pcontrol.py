@@ -16,8 +16,11 @@
 # stat: #115
 
 import os
+
 import sys
 import stat
+
+from datetime import datetime
 
 def main():
 
@@ -44,7 +47,10 @@ def main():
 		assert f.closed
 
 	except FileNotFoundError:
-		print("Filelist.txt not found")
+		# write error code to output and exit program 
+		foutput.write("filelist.txt can not be found")
+		foutput.close()
+		sys.exit(0)
 
 	for path in File_ls:
 		# remove newline char from path
@@ -52,14 +58,17 @@ def main():
 
 		try:
 			status = os.stat(path_temp)
+			# make format corrections on time variable s
+			moddate = datetime.fromtimestamp(status.st_mtime).strftime("%B %d %Y")
+			accdate = datetime.fromtimestamp(status.st_atime).strftime("%B %d %Y")
 
 			foutput.write(path_temp + " Group Readable: " + str(groupread(status)) + ", Group Executable: " + str(groupexec(status)) + " ")
 			foutput.write("Size: {a}, Owner: {b}, Group: {c}, last modified date: {d}, last access date: {e}\n".format(
 				a = status.st_size,
 				b = status.st_uid,
 				c = status.st_gid,
-				d = status.st_mtime,
-				e = status.st_atime)
+				d = moddate,
+				e = accdate)
 			)
 
 			if groupexec(status):
@@ -82,7 +91,7 @@ def main():
 			pass
 
 		except FileNotFoundError:
-			print("File not found")
+			foutput.write("{} can not be found\n".format(path_temp))
 			pass
 
 
