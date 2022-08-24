@@ -14,18 +14,11 @@ def groupexec(status):
 
 # https://www.delftstack.com/howto/python/python-find-file/#find-file-with-the-os.walk-function-in-python
 
-def rectify_path(name, start):
-	for root, dirname, filename in os.walk(start):
-		if name in filename:
-			return os.path.join(root, name)
-
-		return None
-
 def gather_and_write(foutput, path):
 
 	path_temp = path.strip("\n")
-	status = os.stat(path_temp)
 
+	status = os.stat(path_temp)
 
 	# make format corrections on time variable s
 	moddate = datetime.fromtimestamp(status.st_mtime).strftime("%b %d  %Y")
@@ -45,13 +38,12 @@ def gather_and_write(foutput, path):
 
 	if groupexec(status):
 		# change to read/write
-		os.chmod(path_temp, stat.S_IRGRP | stat.S_IWGRP)
+		os.chmod(path_temp, 0o0767)
 	else:
 		# change to read/write/execute
-		os.chmod(path_temp, stat.S_IRGRP | stat.S_IWGRP | stat.S_IXGRP)
+		os.chmod(path_temp, 0o0777)
 
 	return None
-
 
 
 def main():
