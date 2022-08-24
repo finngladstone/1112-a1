@@ -47,17 +47,14 @@ def gather_and_write(foutput, path):
 		e = accdate)
 	)
 
-	# might need to change: ie 
-	# find current bits 
-	# change only group bits with current bits 
-	# push through chmod 
+	current = stat.S_IMODE(os.lstat(path_temp).st_mode)
 
 	if groupexec(status):
 		# change to read/write
-		os.chmod(path_temp, ###)
+		os.chmod(path_temp, current & ~stat.S_IXGRP)
 	else:
 		# change to read/write/execute
-		os.chmod(path_temp, ###)
+		os.chmod(path_temp, current | stat.S_IXGRP)
 
 	return None
 
