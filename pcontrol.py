@@ -14,9 +14,20 @@ def groupexec(status):
 
 # https://www.delftstack.com/howto/python/python-find-file/#find-file-with-the-os.walk-function-in-python
 
+def rectify_path(name, start):
+	for root, dirname, filename in os.walk(start):
+		if name in filename:
+			return os.path.join(root, name)
+
 def gather_and_write(foutput, path):
 
 	path_temp = path.strip("\n")
+
+	if not os.path.exists(os.path.abspath(path_temp)):
+		path_temp = rectify_path(path.strip("\n"), os.getcwd())
+
+	if path_temp == None:
+		raise FileNotFoundError
 
 	status = os.stat(path_temp)
 
