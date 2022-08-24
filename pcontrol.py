@@ -7,10 +7,10 @@ import grp, pwd
 # fn definitions 
 
 def groupread(status):
-		return bool(status.st_mode & stat.S_IRGRP)
+	return bool(status.st_mode & stat.S_IRGRP)
 
 def groupexec(status):
-		return bool(status.st_mode & stat.S_IXGRP)
+	return bool(status.st_mode & stat.S_IXGRP)
 
 # https://www.delftstack.com/howto/python/python-find-file/#find-file-with-the-os.walk-function-in-python
 
@@ -47,12 +47,17 @@ def gather_and_write(foutput, path):
 		e = accdate)
 	)
 
+	# might need to change: ie 
+	# find current bits 
+	# change only group bits with current bits 
+	# push through chmod 
+
 	if groupexec(status):
 		# change to read/write
-		os.chmod(path_temp, 0o0767)
+		os.chmod(path_temp, ###)
 	else:
 		# change to read/write/execute
-		os.chmod(path_temp, 0o0777)
+		os.chmod(path_temp, ###)
 
 	return None
 
