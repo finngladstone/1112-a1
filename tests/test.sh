@@ -43,11 +43,11 @@ touch test_2.ext
 
 #initialised test_1 and test_2
 
-chmod 463 test_1.ext 
-chmod 173 test_2.ext 
+chmod 766 test_1.ext 
+chmod 774 test_2.ext 
 
-# test_1 set to group read/write @ 463
-# test_2 set to group r/w/exec @ 173
+# test_1 set to group read/write @ 766
+# test_2 set to group r/w/exec @ 774
 
 test_1_size=`du -k "test_1.ext" | cut -f1`
 test_2_size=`du -k "test_2.ext" | cut -f1`
@@ -73,8 +73,8 @@ echo "Testing output file formatting, correct reading of permissions... $check_1
 check_2() { # checks that permissions bits have been correctly flipped for test_1 and test_2
     test_1_perms=`stat -c "%a" test_1.ext`
     test_2_perms=`stat -c "%a" test_2.ext`
-    if [[ test_1_perms -eq 473 ]]; then
-        if [[ test_2_perms -eq 163 ]]; then 
+    if [[ test_1_perms -eq 776 ]]; then
+        if [[ test_2_perms -eq 764 ]]; then 
             check_2_result='PASSED'
         else 
             check_2_result='FAILED'
@@ -93,7 +93,7 @@ touch moretests/test_3.ext
 
 cd moretests
 
-chmod 364 test_3.ext 
+chmod 761 test_3.ext 
 
 test_3_size=`du -k "test_3.ext" | cut -f1`
 
@@ -116,7 +116,7 @@ echo "Testing for file in subdirectory + permissions flip in output.txt... $chec
 
 check_3() {
     test_3_perms=`stat -c "%a" moretests/test_3.ext`
-    if [[ test_3_perms -eq 374 ]]; then
+    if [[ test_3_perms -eq 771 ]]; then
         check_3_result='PASSED'
     else 
         check_3_result='FAILED'
