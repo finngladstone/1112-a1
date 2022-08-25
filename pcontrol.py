@@ -1,4 +1,6 @@
+from genericpath import isdir
 import os, sys, stat
+from plistlib import InvalidFileException
 
 from datetime import datetime
 
@@ -26,6 +28,9 @@ def rectify_path(name, start):
 def gather_and_write(foutput, path):
 
 	path_temp = path.strip("\n")
+	
+	if os.path.isdir(path_temp):
+		raise InvalidFileException 
 
 	if not os.path.exists(os.path.abspath(path_temp)): # will rectify path if it is broken 
 		path_temp = rectify_path(path.strip("\n"), os.getcwd())
@@ -88,6 +93,9 @@ def main(): # main control flow
 
 		except FileNotFoundError: # handles missing files (as raised by gather_and_write)
 			foutput.write("{} can not be found\n".format(path.strip("\n")))
+
+		except InvalidFileException: 
+			foutput.write("{}: Invalid type, Please enter a file\n".format(path.strip("\n")))
 				
 	foutput.close()
 	assert foutput.closed # end of main()
