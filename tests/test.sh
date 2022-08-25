@@ -24,6 +24,8 @@ echo "--- First execution cycle ---"
 python3 pcontrol.py # should run, create output.txt, and report missing filelist.txt
 check_1
 echo "Testing program handles missing filelist.txt... $check_1_result" 
+# pause execution so marker can read through 
+read -p "Press enter to resume testing: "
 
 # create filelist but add invalid path 
 touch filelist.txt 
@@ -38,6 +40,7 @@ python3 pcontrol.py
 
 check_1
 echo "Testing program handles invalid file name and broken directory... $check_1_result"
+read -p "Press enter to resume testing: "
 
 # start by testing permissions flip: examine chmod values as well as output!
 
@@ -69,6 +72,7 @@ python3 pcontrol.py
 check_1 # run diff test again
 
 echo "Testing output file formatting, correct reading of permissions... $check_1_result"
+read -p "Press enter to resume testing: "
 
 # https://stackoverflow.com/questions/26949492/how-to-check-chmod-using-bash-numeric
 
@@ -128,3 +132,4 @@ check_3() {
 
 check_3
 echo "Testing that file in subdirectory was successfully flipped in chmod... $check_3_result"
+echo "--- Testing Completed ---"
