@@ -1,5 +1,5 @@
-from genericpath import isdir
 import os, sys, stat
+
 from plistlib import InvalidFileException
 
 from datetime import datetime

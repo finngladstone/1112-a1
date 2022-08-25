@@ -1,3 +1,14 @@
+#### Note for markers
+
+# I have included pause points in the execution of the tests so you can manually 
+# inspect the exp_out and out files if you so wish 
+
+# This is because the tested files are shuffled throughout execution to avoid unnecessary repeats
+
+# This step is not crucial as the script will flag if the program fails a check but might help w marking! 
+
+# Cheers 
+
 shopt -s extglob # allows us to reset the directory in one line 
 
 today=`date '+%b %d  %Y'`

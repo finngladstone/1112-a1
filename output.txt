@@ -1,0 +1,5 @@
+file1.ext Group Readable: True, Group Executable: True Size: 11, Owner: finng, Group: finng, last modified date: Aug 21  2022, last access date: Aug 22  2022
+file2.ext Group Readable: True, Group Executable: True Size: 11, Owner: finng, Group: finng, last modified date: Aug 21  2022, last access date: Aug 24  2022
+file3.ext Group Readable: True, Group Executable: True Size: 11, Owner: finng, Group: finng, last modified date: Aug 21  2022, last access date: Aug 24  2022
+file4.ext Group Readable: True, Group Executable: True Size: 11, Owner: finng, Group: finng, last modified date: Aug 21  2022, last access date: Aug 24  2022
+bruh: Invalid type, Please enter a file
