@@ -27,14 +27,17 @@ echo "Testing program handles missing filelist.txt... $check_1_result"
 
 # create filelist but add invalid path 
 touch filelist.txt 
+mkdir test_dir
 echo "test_1.ext" > filelist.txt 
+echo "test_dir" >> filelist.txt
 echo "test_1.ext can not be found" > exp_output.txt
+echo "test_dir: Invalid type, Please enter a file" >> exp_output.txt
 
 echo "--- Second execution cycle ---"
 python3 pcontrol.py
 
 check_1
-echo "Testing program handles invalid file name... $check_1_result"
+echo "Testing program handles invalid file name and broken directory... $check_1_result"
 
 # start by testing permissions flip: examine chmod values as well as output!
 
@@ -53,7 +56,7 @@ test_1_size=`du -k "test_1.ext" | cut -f1`
 test_2_size=`du -k "test_2.ext" | cut -f1`
 
 # create + modify filelist to include the two test files 
-
+echo "test_1.ext" > filelist.txt
 echo "test_2.ext" >> filelist.txt
 
 touch exp_output.txt 
